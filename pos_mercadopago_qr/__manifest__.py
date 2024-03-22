@@ -14,7 +14,7 @@ Allow to pay with Payway
 This module allows customers to pay for their orders with credit
 cards. The transactions are processed by MP (developed by Axcelere). 
     """,
-    'depends': ['point_of_sale'],
+    'depends': ['point_of_sale', 'pos_credit_card_installment'],
     'data': [
         'security/ir.model.access.csv',
         'views/pos_mp_views.xml',
@@ -26,11 +26,11 @@ cards. The transactions are processed by MP (developed by Axcelere).
         'data/pos_mp_demo.xml',
     ],
     'installable': True,
-    # 'assets': {
-    #     'web.assets_backend': [
-    #         # 'pos_mercado_point/static/src/js/PaymentScreen.js',
-    #         'pos_mercado_point/static/src/js/CreditCardInstallmentButton.js',
-    #     ],
-    # },
+    'assets': {
+        'web.assets_backend': [
+            'pos_mercadopago_qr/static/src/js/PaymentScreen.js',
+            'pos_mercadopago_qr/static/src/js/CreditCardInstallmentButton.js',
+        ],
+    },
     'license': 'LGPL-3',
 }

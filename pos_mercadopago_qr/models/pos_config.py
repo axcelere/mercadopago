@@ -224,7 +224,7 @@ class PosTerminalMPQr(models.Model):
         [
             ('621102', 'Argentina')
         ],
-        string='Código MCC')
+        string='Código MCC', default='621102')
     external_id = fields.Char(string="Identificador único de la caja")
     store_box_id = fields.Many2one('pos.store.box.mp.qr', string="Store terminal")
     image_qr = fields.Char(string="Image QR")
@@ -233,24 +233,30 @@ class PosTerminalMPQr(models.Model):
     qr_code = fields.Char(string="QR code")
     fixed_amount = fields.Boolean(string="Fixed amount")
     box_id = fields.Char(string="Box ID")
+    store_id = fields.Char(string="Store")
+    external_store_id = fields.Char(string="External Store")
+    user_id = fields.Char(string="User")
     active_box = fields.Boolean(string="Estado")
 
     def remove_point_box(self):
         credential_id = self.env['pos_mp.configuration.qr'].search([])
-        url = credential_id.mp_qr_url + 'pos/' + self.box_id
-        headers = {
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer ' + '' + credential_id.mp_access_token,
-        }
-        try:
-            response = requests.delete(url, headers=headers)
-        except ConnectionError as error:
-            raise ValidationError('Error comunicandose con la plataforma. Respuesta con error %s' % error)
-        if response.status_code == 204:
-            self.unlink()
+        if self.box_id:
+            url = credential_id.mp_qr_url + 'pos/' + self.box_id
+            headers = {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + '' + credential_id.mp_access_token,
+            }
+            try:
+                response = requests.delete(url, headers=headers)
+            except ConnectionError as error:
+                raise ValidationError('Error comunicandose con la plataforma. Respuesta con error %s' % error)
+            if response.status_code == 204:
+                self.unlink()
+            else:
+                data_to_json = response.json()
+                raise ValidationError('Error: %s' % data_to_json)
         else:
-            data_to_json = response.json()
-            raise ValidationError('Error: %s' % data_to_json)
+            self.unlink()
 
     def edit_point_box(self):
         credential_id = self.env['pos_mp.configuration.qr'].search([])
@@ -327,12 +333,15 @@ class PosStoreTerminalMPQr(models.Model):
                 if response.status_code == 201:
                     data_to_json = response.json()
                     box.write({'image_qr': data_to_json['qr']['image'],
-                                'template_document_qr': data_to_json['qr']['template_document'],
-                                'template_image_qr': data_to_json['qr']['template_image'],
-                                'qr_code': data_to_json['qr_code'],
-                                'box_id': data_to_json['id'],
-                                'active_box': True
-                                })
+                               'template_document_qr': data_to_json['qr']['template_document'],
+                               'template_image_qr': data_to_json['qr']['template_image'],
+                               'qr_code': data_to_json['qr_code'],
+                               'box_id': data_to_json['id'],
+                               'active_box': True,
+                               'external_id': data_to_json['external_id'],
+                               'store_id': data_to_json['store_id'],
+                               'user_id': data_to_json['user_id'],
+                               'external_store_id': data_to_json['external_store_id']})
                 else:
                     data_to_json = response.json()
                     raise ValidationError('Error: %s' % data_to_json)
@@ -346,7 +355,14 @@ class PosStoreTerminalMPQr(models.Model):
             rec.write({'state': 'draft'})
 
 
-# class PosConfig(models.Model):
-#     _inherit = 'pos.config'
-#
-#     mp_qr_terminal_id = fields.Many2one('pos.terminal.mp.qr', string='MP Terminal')
+class PosConfig(models.Model):
+    _inherit = 'pos.config'
+
+    sale_point_id = fields.Many2one('pos.box.mp.qr', string='Punto de venta MP')
+
+    def _compute_current_session(self):
+        res = super(PosConfig, self)._compute_current_session()
+        for pos_config in self:
+            sale_point_id = self.env["pos.box.mp.qr"].sudo().search([("config_id", "=", pos_config.id)], limit=1)
+            pos_config.sale_point_id = sale_point_id.id
+        return res

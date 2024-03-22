@@ -5,7 +5,7 @@ odoo.define('pos_payway.PaymentScreen', function (require) {
     const Registries = require('point_of_sale.Registries');
     const PaymentScreen = require('point_of_sale.PaymentScreen');
     const { Gui } = require('point_of_sale.Gui');
-
+    const Dialog = require('web.Dialog');
     var core = require('web.core');
     var rpc = require('web.rpc');
     var _t = core._t;
@@ -21,7 +21,7 @@ odoo.define('pos_payway.PaymentScreen', function (require) {
                 let payment_type;
                 const order = this.env.pos.get_order();
                 const installment = this.env.pos.installment;
-                if (order.selected_paymentline.payment_method.use_payment_terminal === "payway"){
+                if (order.selected_paymentline.payment_method.use_payment_terminal === "mp_qr"){
                     if (order.selected_paymentline.amount > 0){
                         payment_type = 'payments'
                     }
@@ -30,7 +30,7 @@ odoo.define('pos_payway.PaymentScreen', function (require) {
                     }
                     var result = await rpc.query({
                         model: 'pos.order',
-                        method: 'get_payment_status',
+                        method: 'get_payment_status_mp',
                         args: [[], {'amount_total': order.selected_paymentline.amount, 'payment_method_id': order.selected_paymentline.payment_method.id, 'pos_session_id': order.pos_session_id, 'access_token_payment': localStorage['access_token_payment'], 'payment_type_build': payment_type, 'installment': installment}],
                     });
 
@@ -68,24 +68,12 @@ odoo.define('pos_payway.PaymentScreen', function (require) {
                 const line = this.paymentLines.find((line) => line.cid === cid);
                 console.log('testfffff')
                 console.log(line)
-                if (line.payment_method.use_payment_terminal === "payway"){
-                    if (line.amount > 0){
-                        payment_type = 'payments'
-                    }
-                    else{
-                        payment_type = 'reversals_refunds'
-                    }
+                if (line.payment_method.use_payment_terminal === "mp_qr"){
                     try {
-                        const toRefundLines = this.env.pos.toRefundLines
-                        let toRefundLines_ids = []
-                        _.each(toRefundLines, function(line_id,index) {
-                            toRefundLines_ids.push(line_id.orderline.orderBackendId);
-                        })
-
                         rpc.query({
                             model: 'pos.order',
-                            method: 'make_cancel',
-                            args: [[], {'amount_total': line.amount, 'payment_method_id': line.payment_method.id, 'pos_session_id':line.order.pos_session_id, 'access_token_payment': localStorage['access_token_payment'], 'payment_type_build': payment_type, 'toRefundLines_ids': toRefundLines_ids}],
+                            method: 'make_cancel_mp',
+                            args: [[], {'amount_total': line.amount, 'payment_method_id': line.payment_method.id, 'pos_session_id':line.order.pos_session_id, 'access_token_payment': localStorage['access_token_payment']}],
                         });
                     } catch (_e) {
                         Dialog.alert(this, _t("Error trying to connect to terminal. Check your internet connection"));

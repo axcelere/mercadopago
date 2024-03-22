@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-      <record id="pos_mp_configuration_data" model="pos_mp.configuration.qr">
-        <field name="name">MP</field>
-        <field name="mp_qr_access_token">TEST-1282935097146192-120510-08a1b3e6f3fafae4fd485bc7f1173938-28375424</field>
-      </record>
+         <record id="pos_mp_configuration_data" model="pos_mp.configuration.qr">
+            <field name="name">MP</field>
+            <field name="mp_qr_access_token">TEST-1282935097146192-120510-08a1b3e6f3fafae4fd485bc7f1173938-28375424</field>
+         </record>
+
+        <record id="pos_mp_idempotency" model="ir.config_parameter">
+            <field name="name">mp_idempotency</field>
+            <field name="mp_qr_access_token">TEST-TEST-TEST-TEST</field>
+          </record>
     </data>
 </odoo>
