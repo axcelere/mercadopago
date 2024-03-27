@@ -3,3 +3,4 @@ access_pos_store_mp_qr,access_pos_store_mp_qr,model_pos_store_mp_qr,point_of_sal
 access_pos_box_mp_qr,access_pos_box_mp_qr,model_pos_box_mp_qr,point_of_sale.group_pos_manager,1,1,1,1
 access_pos_store_box_mp_qr,access_pos_store_box_mp_qr,model_pos_store_box_mp_qr,point_of_sale.group_pos_manager,1,1,1,1
 access_pos_mp_configuration_qr,access_pos_mp_configuration_qr,model_pos_mp_configuration_qr,point_of_sale.group_pos_manager,1,1,1,1
+access_mp_log_qr,access_mp_log_qr,model_mp_log_qr,point_of_sale.group_pos_manager,1,1,1,1

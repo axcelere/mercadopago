@@ -21,9 +21,7 @@ cards. The transactions are processed by MP (developed by Axcelere).
         'views/pos_store_views.xml',
         'views/pos_config_setting_views.xml',
         'views/pos_box_views.xml',
-    ],
-    'demo': [
-        'data/pos_mp_demo.xml',
+        'views/mp_log_views.xml',
     ],
     'installable': True,
     'assets': {
