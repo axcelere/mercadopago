@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-        <record id="view_pos_mp_box_form" model="ir.ui.view" >
-            <field name="name">MP Caja</field>
-            <field name="model">pos.store.box.mp.qr</field>
+        <record id="view_mp_box_form" model="ir.ui.view" >
+            <field name="name">Caja</field>
+            <field name="model">mp.store.box</field>
             <field name="arch" type="xml">
-                <form string="Store">
+                <form string="Caja">
                     <header>
                         <button name="publish_box" type="object" string="Publicar" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                         <button name="to_draft" type="object" string="Volver a borrador" attrs="{'invisible': [('state', '!=', 'publish')]}"/>
@@ -21,7 +21,7 @@
                             <field name="external_store_id" readonly="1"/>
                         </group>
                         <notebook>
-                            <page string="Puntos de ventas">
+                            <page string="Puntos de ventas" name="pos_store">
                                 <group>
                                     <group>
                                         <field name="box_line_ids" widget="one2many" colspan="4" nolabel="1" mode="tree" editable="bottom">
@@ -58,8 +58,8 @@
         </record>
 
         <record id="view_pos_mp_box_tree" model="ir.ui.view">
-            <field name="name">MP store</field>
-            <field name="model">pos.store.box.mp.qr</field>
+            <field name="name">Caja</field>
+            <field name="model">mp.store.box</field>
             <field name="arch" type="xml">
                 <tree string="Caja">
                     <field name="name"/>
@@ -69,12 +69,12 @@
         </record>
 
         <record id="action_box_mp" model="ir.actions.act_window">
-            <field name="name">MP Caja</field>
+            <field name="name">Caja</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">pos.store.box.mp.qr</field>
+            <field name="res_model">mp.store.box</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem parent="pos_mercadopago_qr.menu_pos_mp_config" action="pos_mercadopago_qr.action_box_mp" id="menu_pos_box_mp_config" groups="base.group_no_one" sequence="36"/>
+        <menuitem parent="pos_mercadopago.menu_mp_credential_config" action="pos_mercadopago.action_box_mp" id="menu_pos_box_mp_config" groups="base.group_no_one" sequence="36"/>
     </data>
 </odoo>

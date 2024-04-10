@@ -10,17 +10,12 @@ odoo.define('pos_mercadopago_qr.CreditCardInstallmentButton', function (require)
     var rpc = require('web.rpc');
     var _t = core._t;
 
-    const CreditCardInstallmentButtonMP = CreditCardInstallmentButton => class extends CreditCardInstallmentButton {
+    const CreditCardInstallmentButtonMPQR = CreditCardInstallmentButton => class extends CreditCardInstallmentButton {
 
-        /**
-         * @override
-         */
         async onClick() {
             const order = this.env.pos.get_order();
             const installment = this.env.pos.installment;
             if (order.selected_paymentline.payment_method.use_payment_terminal === "mp_qr"){
-                console.log('Test MPQR ENTRO')
-                console.log(order)
                 if (order.selected_paymentline.amount > 0){
                     // const orderlines = order.orderlines
                     // let info_line = []
@@ -50,10 +45,6 @@ odoo.define('pos_mercadopago_qr.CreditCardInstallmentButton', function (require)
                                 body: _t(vals['error']),
                             });
                         }
-                        // else{
-                        //     localStorage['access_token_payment'] = vals['access_token']
-                        //     order.mp_qr_payment_token = vals['access_token']
-                        // }
                     });
                 }
                 else{
@@ -74,22 +65,18 @@ odoo.define('pos_mercadopago_qr.CreditCardInstallmentButton', function (require)
                             });
                         }
                         else{
-                            localStorage['access_token_payment'] = vals['access_token']
-                            order.mp_qr_payment_token = vals['access_token'];
+                            order.mp_qr_payment_refound_token = vals['payment_id'];
                         }
                     });
                 }
-            }else{
-                await super.onClick();
+            } else {
+                super.onClick();
             }
         }
 
     }
 
-    // CreditCardInstallmentButtonMP.template = 'CreditCardInstallmentButtonMP';
-    // Registries.Component.add(CreditCardInstallmentButtonMP);
-    // return CreditCardInstallmentButtonMP;
-    Registries.Component.extend(CreditCardInstallmentButton, CreditCardInstallmentButtonMP);
+    Registries.Component.extend(CreditCardInstallmentButton, CreditCardInstallmentButtonMPQR);
     return CreditCardInstallmentButton;
 
 });

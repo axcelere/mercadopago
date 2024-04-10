@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<odoo>
-    <data>
-      <record id="pos_mp_configuration_data" model="pos_mp.configuration">
-        <field name="name">MP</field>
-        <field name="mp_access_token">TEST-1282935097146192-120510-08a1b3e6f3fafae4fd485bc7f1173938-28375424</field>
-      </record>
-    </data>
-</odoo>

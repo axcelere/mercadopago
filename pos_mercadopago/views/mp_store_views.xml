@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-        <record id="view_pos_mp_store_form" model="ir.ui.view" >
+        <record id="view_mp_store_form" model="ir.ui.view" >
             <field name="name">MP store</field>
-            <field name="model">pos.store.mp.qr</field>
+            <field name="model">mp.store</field>
             <field name="arch" type="xml">
                 <form string="Store">
                     <header>
@@ -133,8 +133,8 @@
         </record>
 
         <record id="view_pos_mp_store_tree" model="ir.ui.view">
-            <field name="name">MP store</field>
-            <field name="model">pos.store.mp.qr</field>
+            <field name="name">Store</field>
+            <field name="model">mp.store</field>
             <field name="arch" type="xml">
                 <tree string="Store">
                     <field name="name"/>
@@ -143,12 +143,12 @@
         </record>
 
         <record id="action_store_mp" model="ir.actions.act_window">
-            <field name="name">MP store</field>
+            <field name="name">Store</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">pos.store.mp.qr</field>
+            <field name="res_model">mp.store</field>
             <field name="view_mode">tree,kanban,form</field>
         </record>
 
-        <menuitem parent="pos_mercadopago_qr.menu_pos_mp_config" action="pos_mercadopago_qr.action_store_mp" id="menu_pos_store_mp_config" groups="base.group_no_one" sequence="36"/>
+        <menuitem parent="pos_mercadopago.menu_mp_credential_config" action="pos_mercadopago.action_store_mp" id="menu_pos_store_mp_config" groups="base.group_no_one" sequence="36"/>
     </data>
 </odoo>

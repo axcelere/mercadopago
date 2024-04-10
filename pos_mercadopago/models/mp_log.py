@@ -6,8 +6,8 @@ from odoo import models, fields, api, _
 _logger = logging.getLogger(__name__)
 
 
-class MPLogQR(models.Model):
-    _name = 'mp.log.qr'
+class MPLog(models.Model):
+    _name = 'mp.log'
     _rec_name = 'config_id'
 
     config_id = fields.Many2one('pos.config', string="Punto de venta")
@@ -25,4 +25,16 @@ class MPLogQR(models.Model):
     status_code = fields.Char(string="Status code")
     request = fields.Text(string="Request")
     response = fields.Text(string="Response")
+
+    def create_logs(self, config_id, action, headers, endpoint, status_code, payload, response):
+        self.env['mp.log'].create({
+            'config_id': config_id.id,
+            'action': action,
+            'header': headers,
+            'endpoint': endpoint,
+            'status_code': status_code,
+            'request': payload,
+            'response': response,
+        })
+        self.env.cr.commit()
 

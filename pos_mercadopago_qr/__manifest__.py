@@ -8,20 +8,16 @@
     'sequence': 6,
     'summary': 'Payment method MP',
     'description': """
-Allow to pay with Payway
+Allow to pay with MP QR
 ==============================
 
 This module allows customers to pay for their orders with credit
 cards. The transactions are processed by MP (developed by Axcelere). 
     """,
-    'depends': ['point_of_sale', 'pos_credit_card_installment'],
+    'depends': ['pos_mercadopago'],
     'data': [
-        'security/ir.model.access.csv',
-        'views/pos_mp_views.xml',
-        'views/pos_store_views.xml',
-        'views/pos_config_setting_views.xml',
-        'views/pos_box_views.xml',
-        'views/mp_log_views.xml',
+        # 'views/pos_config_setting_views.xml',
+        'views/pos_payment_method_views.xml',
     ],
     'installable': True,
     'assets': {

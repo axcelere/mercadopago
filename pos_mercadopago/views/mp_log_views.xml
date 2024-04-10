@@ -2,8 +2,8 @@
 <odoo>
     <data>
         <record id="view_pos_mp_logs_form" model="ir.ui.view" >
-            <field name="name">MP Logs</field>
-            <field name="model">mp.log.qr</field>
+            <field name="name">Logs</field>
+            <field name="model">mp.log</field>
             <field name="arch" type="xml">
                 <form string="Logs" create="0" delete="0">
                     <sheet>
@@ -26,8 +26,8 @@
         </record>
 
         <record id="view_pos_mp_logs_tree" model="ir.ui.view">
-            <field name="name">MP Logs</field>
-            <field name="model">mp.log.qr</field>
+            <field name="name">Logs</field>
+            <field name="model">mp.log</field>
             <field name="arch" type="xml">
                 <tree string="Caja" create="0" delete="0">
                     <field name="config_id"/>
@@ -39,12 +39,12 @@
         </record>
 
         <record id="action_pos_mp_logs" model="ir.actions.act_window">
-            <field name="name">MP Logs</field>
+            <field name="name">Logs</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mp.log.qr</field>
+            <field name="res_model">mp.log</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem parent="pos_mercadopago_qr.menu_pos_mp_config" action="pos_mercadopago_qr.action_pos_mp_logs" id="menu_pos_mp_logs" groups="base.group_no_one" sequence="37"/>
+        <menuitem parent="pos_mercadopago.menu_mp_credential_config" action="pos_mercadopago.action_pos_mp_logs" id="menu_pos_mp_logs" groups="base.group_no_one" sequence="37"/>
     </data>
 </odoo>

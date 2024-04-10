@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pos_store_mp,access_pos_store_mp,model_pos_store_mp,point_of_sale.group_pos_manager,1,1,1,1
-access_pos_terminal_mp,access_pos_terminal_mp,model_pos_terminal_mp,point_of_sale.group_pos_manager,1,1,1,1
-access_pos_store_terminal_mp,access_pos_store_terminal_mp,model_pos_store_terminal_mp,point_of_sale.group_pos_manager,1,1,1,1
-access_pos_mp_configuration,access_pos_mp_configuration,model_pos_mp_configuration,point_of_sale.group_pos_manager,1,1,1,1
