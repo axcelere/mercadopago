@@ -43,7 +43,7 @@ odoo.define('pos_mercadopago_qr.PaymentScreen', function (require) {
                                 body: _t(vals['error']),
                             });
                         }
-                    }else{
+                    } else {
                         return  super.validateOrder(...arguments);
                     }
                 }
@@ -91,6 +91,7 @@ odoo.define('pos_mercadopago_qr.PaymentScreen', function (require) {
                         this.render(true);
                     }
                 } else {
+                    console.log('Entra al eliminar MP QR SUPER')
                     super.deletePaymentLine(event);
                 }
             }

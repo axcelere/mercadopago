@@ -116,7 +116,7 @@ class PosOrder(models.Model):
         access_token = configuration_id.mp_access_token or ''
         url = configuration_id.mp_url
         idempotency = str(uuid.uuid4())
-        endpoint = url + '' + 'v1/payments/' + '' + pos_order_id.mp_qr_payment_token + '/refunds'
+        endpoint = url + '' + 'v1/payments/' + '' + pos_order_id[0].mp_qr_payment_token + '/refunds'
         headers = {'Content-Type': 'application/json', 'X-Idempotency-Key': idempotency,  'Authorization': 'Bearer ' + '' + access_token}
         _logger.info('*************************Sending  request to MPQR for sale******************************')
         payload = {
