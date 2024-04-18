@@ -16,19 +16,7 @@ odoo.define('pos_mercadopago_point.CreditCardInstallmentButton', function (requi
             const order = this.env.pos.get_order();
             const installment = this.env.pos.installment;
             if (order.selected_paymentline.payment_method.use_payment_terminal === "mp_point"){
-                console.log('Test MPPOINT ENTRO')
-                console.log(order)
                 if (order.selected_paymentline.amount > 0){
-                    // const orderlines = order.orderlines
-                    // let info_line = []
-                    // _.each(orderlines, function(line_id,index) {
-                    //     info_line.push({"title": line_id.product.display_name,
-                    //                     "unit_price": line_id.price,
-                    //                     "quantity": line_id.quantity,
-                    //                     "description": line_id.product.display_name,
-                    //     });
-                    // })
-                    // 'info_product': info_line,
                     rpc.query({
                         model: 'pos.order',
                         method: 'make_payment_mp_point',
@@ -46,10 +34,10 @@ odoo.define('pos_mercadopago_point.CreditCardInstallmentButton', function (requi
                                 title: _t('Error'),
                                 body: _t(vals['error']),
                             });
-                        }
-                        else{
+                        } else {
                             order.payment_point_ref_id = vals['payment_id']
                             order.token_point_ref_id = vals['token_id']
+                            return;
                         }
                     });
                 }
@@ -69,10 +57,8 @@ odoo.define('pos_mercadopago_point.CreditCardInstallmentButton', function (requi
                                 title: _t(vals['error']),
                                 body: _t(vals['message']),
                             });
-                        }
-                        else{
-                            localStorage['access_token_payment'] = vals['access_token']
-                            order.mp_qr_payment_token = vals['access_token'];
+                        } else {
+                            return;
                         }
                     });
                 }

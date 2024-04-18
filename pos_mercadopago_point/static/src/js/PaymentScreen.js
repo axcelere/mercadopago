@@ -54,7 +54,9 @@ odoo.define('pos_mercadopago_point.PaymentScreen', function (require) {
                 const { cid } = event.detail;
                 const order = this.env.pos.get_order();
                 const line = this.paymentLines.find((line) => line.cid === cid);
+                console.log('Entra al eliminar MP POINT')
                 if (line.payment_method.use_payment_terminal === "mp_point"){
+                    console.log('Entra al eliminar MP POINT IFI FII')
                     try {
                         rpc.query({
                             model: 'pos.order',
@@ -82,6 +84,7 @@ odoo.define('pos_mercadopago_point.PaymentScreen', function (require) {
                         this.render(true);
                     }
                 } else {
+                    console.log('Entra al eliminar MP POINT SUPER')
                     super.deletePaymentLine(event);
                 }
             }
