@@ -24,7 +24,7 @@ Supports automated payments without CVV for subscriptions and card authorization
         'views/payment_views.xml',
         'views/payment_mercadopago_templates.xml',
         'wizards/check_payments.xml',
-        'data/payment_acquirer_data.xml',
+        # 'data/payment_acquirer_data.xml',
     ],
     'demo': [
         'demo/payment_acquirer_demo.xml',
@@ -38,6 +38,6 @@ Supports automated payments without CVV for subscriptions and card authorization
     },
     'uninstall_hook': 'uninstall_hook',
     'application': False,
-    'installable': False,
+    'installable': True,
     'license': 'LGPL-3',
 }
